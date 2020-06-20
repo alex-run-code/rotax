@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+
+  <button type="submit" id='testbutton' class="btn btn-primary">go</button>
+
+  <div class='container'>
+    <div class='row'>
+      <div class='col-md-6 offset-md-3' style='margin-top: 50px;'>
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">CUI</label>
+            <input type="text" class="form-control" id="inputcui" placeholder="Enter CUI">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Date</label>
+            <input type="text" class="form-control" id="inputdate" placeholder="Enter Date (format:YYYY-MM-DD)">
+          </div>
+          <button type="submit" id='gobutton' class="btn btn-primary">go</button>
+        </form>
+      </div>
+    </div>
+
+    <div class='row'>
+      <div class='col-md-6 offset-md-3' style='margin-top: 50px;'>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Info</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody id='info_table_body'>
+            <tr>
+              <td>Info</td>
+              <td>Description</td>
+            </tr>
+            <tr>
+              <td>car</td>
+              <td>ferrari</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <script>
+    cui = document.getElementById('inputcui');
+    date = document.getElementById('inputdate');
+
+    $("#gobutton").click(function (e) {
+      e.preventDefault();
+      console.log(cui.value);
+      console.log(date.value);
+    });
+
+
+    $("#testbutton").click(function (e) {
+      e.preventDefault();
+      console.log('hello');
+      var cui = 33811173
+      var date = '2014-11-17'
+      $.ajax({
+        url: '{% url "get_tax_info" %}',
+        data: {
+          'cui': cui,
+          'date': date,
+        },
+        success: function (result) {
+          var company_tax_info = result[0]['fields'];
+          console.log(company_tax_info);
+          for (var key in company_tax_info) {
+            var info_table = document.getElementById('info_table_body');
+            var tr = document.createElement('tr');
+            var td1 = document.createElement('td');
+            var td2 = document.createElement('td');
+            td1.innerHTML = key;
+            td2.innerHTML = company_tax_info[key];
+            console.log(key, company_tax_info[key]);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            info_table.appendChild(tr);
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

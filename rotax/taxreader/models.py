@@ -28,3 +28,6 @@ class CompanyTaxInfo(models.Model):
     dataAnulareSplitTVA = models.CharField(max_length=1000)
     statusSplitTVA = models.BooleanField(null=True)
     iban = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.denumire
