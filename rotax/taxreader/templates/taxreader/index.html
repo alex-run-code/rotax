@@ -19,8 +19,6 @@
 
 <body>
 
-  <button type="submit" id='testbutton' class="btn btn-primary">go</button>
-
   <div class='container'>
     <div class='row'>
       <div class='col-md-6 offset-md-3' style='margin-top: 50px;'>
@@ -73,21 +71,14 @@
     integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
   <script>
-    cui = document.getElementById('inputcui');
-    date = document.getElementById('inputdate');
+
+    var info_table = document.getElementById('info_table_body');
 
     $("#gobutton").click(function (e) {
       e.preventDefault();
-      console.log(cui.value);
-      console.log(date.value);
-    });
-
-
-    $("#testbutton").click(function (e) {
-      e.preventDefault();
       console.log('hello');
-      var cui = 33811173
-      var date = '2014-11-17'
+      var cui = document.getElementById('inputcui').value;
+      var date = document.getElementById('inputdate').value;
       $.ajax({
         url: '{% url "get_tax_info" %}',
         data: {
@@ -95,19 +86,23 @@
           'date': date,
         },
         success: function (result) {
-          var company_tax_info = result[0]['fields'];
-          console.log(company_tax_info);
-          for (var key in company_tax_info) {
-            var info_table = document.getElementById('info_table_body');
-            var tr = document.createElement('tr');
-            var td1 = document.createElement('td');
-            var td2 = document.createElement('td');
-            td1.innerHTML = key;
-            td2.innerHTML = company_tax_info[key];
-            console.log(key, company_tax_info[key]);
-            tr.appendChild(td1);
-            tr.appendChild(td2);
-            info_table.appendChild(tr);
+          info_table.innerHTML = '';
+          console.log(result);
+          if (result != 'False') {
+            var company_tax_info = result[0]['fields'];
+            for (var key in company_tax_info) {
+              var tr = document.createElement('tr');
+              var td1 = document.createElement('td');
+              var td2 = document.createElement('td');
+              td1.innerHTML = key;
+              td2.innerHTML = company_tax_info[key];
+              console.log(key, company_tax_info[key]);
+              tr.appendChild(td1);
+              tr.appendChild(td2);
+              info_table.appendChild(tr);
+            }
+          } else {
+            console.log('nothing found')
           }
         }
       });
