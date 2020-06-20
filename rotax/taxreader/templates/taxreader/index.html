@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +11,9 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
+  <!-- my css -->
+  <link rel="stylesheet" href="{% static 'taxreader/css/custom.css' %}">
+
 
 </head>
 
@@ -17,24 +21,25 @@
 
   <div class='container'>
 
-    <div class='section border rounded mb-3 mt-3'>
+    <div class='section shadow rounded mb-5 mt-3 bg-light'>
       <div class='row'>
         <div class='col text-center p-3'>
-          <h1>Rotax</h1>
+          <h1 class="display-3">Rotax</h1>
           <p>Rotax help you to find juridic informations about any company.</p>
+          <a href='{% url "companies" %}'>See all companies</a>
         </div>
       </div>
     </div>
-    <div class='section border rounded'>
+    <div class='section rounded shadow bg-white'>
       <div class='row'>
         <div class='offset-md-3 col-md-6 mt-5'>
           <form>
             <div class="form-group">
-              <label for="exampleInputEmail1">CUI</label>
+              <label>CUI</label>
               <input type="text" class="form-control" id="inputcui" placeholder="Enter CUI">
             </div>
             <div class="form-group">
-              <label for="exampleInputPassword1">Date</label>
+              <label>Date</label>
               <input type="text" class="form-control" id="inputdate" placeholder="Enter Date (format:YYYY-MM-DD)">
             </div>
             <button type="submit" id='gobutton' class="btn btn-primary">Research a company</button>
@@ -42,7 +47,7 @@
         </div>
       </div>
 
-      <div class='row'>
+      <div class='row mb-5'>
         <div class='col-md-6 offset-md-3' style='margin-top: 50px;'>
           <table id=full_table style='display:none;' class="table table-bordered">
             <thead class='thead-dark'>
@@ -54,7 +59,7 @@
             <tbody id='info_table_body'>
             </tbody>
           </table>
-          <p id='no_company_found' style='display:none'>Sorry, we didn't find any company with those infos.</p>
+          <p class='text-secondary mt-2' id='no_company_found' style='display:none'>Sorry, we didn't find any company with those infos.</p>
         </div>
       </div>
     </div>

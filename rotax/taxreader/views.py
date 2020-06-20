@@ -10,8 +10,14 @@ from django.db.utils import IntegrityError
 # Create your views here.
 
 def index(request): 
-    ''' Homepage, contains a presenation of the site. '''
     return render(request, 'taxreader/index.html')
+
+def companies(request): 
+    companies = CompanyTaxInfo.objects.all()
+    context = {
+        'companies':companies,
+    }
+    return render(request, 'taxreader/companies.html', context)
 
 def get_tax_info(request):
     cui = request.GET['cui']
