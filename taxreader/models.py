@@ -4,7 +4,7 @@ from django.db import models
 
 
 class CompanyTaxInfo(models.Model):
-    cui = models.IntegerField(unique=True)
+    cui = models.IntegerField()
     data =  models.CharField(max_length=1000)
     denumire= models.CharField(max_length=100)
     adresa = models.CharField(max_length=1000)
@@ -28,6 +28,9 @@ class CompanyTaxInfo(models.Model):
     dataAnulareSplitTVA = models.CharField(max_length=1000)
     statusSplitTVA = models.BooleanField(null=True)
     iban = models.CharField(max_length=100)
+
+    class Meta:
+        unique_together = ('cui', 'data')
 
     def __str__(self):
         return self.denumire

@@ -33,6 +33,11 @@
       </div>
     </div>
 
+    <form action="{% url 'clear_companies' %}" method="post" class='mb-5'>
+      {% csrf_token %}
+        <button class='btn btn-danger' type='submit' value='submit'>ștergeți companiile</button>
+    </form>
+
     <div class='section'>
       <div class='row text-center'>
         <div class='col'>

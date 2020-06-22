@@ -33,6 +33,12 @@
       </div>
     </div>
 
+
+    <form action="{% url 'clear_responses' %}" method="post">
+      {% csrf_token %}
+        <button class='btn btn-danger' type='submit' value='submit'>ștergeți răspunsurile</button>
+    </form>
+    
     {% for response in responses %}
     <div class="card mt-3">
         <div class="card-header">
