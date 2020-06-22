@@ -1,5 +1,6 @@
 import requests
-from taxreader.models import CompanyTaxInfo
+from taxreader.models import CompanyTaxInfo, ResponseFromAnaf
+import datetime
 
 def get_tax_info(cui, date):
     post = [{"cui": cui, "data":date }]
@@ -8,6 +9,13 @@ def get_tax_info(cui, date):
         json_response = re.json()
         print(json_response['found'][0]['denumire'])
         print(len(json_response['found'][0]['denumire']))
+        new_response_from_anaf = ResponseFromAnaf(
+            date = datetime.datetime.now(),
+            data_sent = post,
+            data_received = json_response,
+            status_code = 200,
+        )
+        new_response_from_anaf.save()
         if len(json_response['found'][0]['denumire']) != 0:
             cui = json_response['found'][0]['cui']
             new_company = CompanyTaxInfo(
@@ -38,41 +46,11 @@ def get_tax_info(cui, date):
             new_company.save()
             print(json_response['found'][0]['denumire'], ' - added')
     else:
+        new_response_from_anaf = ResponseFromAnaf(
+            date = datetime.datetime.now(),
+            data_sent = post,
+            data_received = 'None',
+            status_code = 500,
+        )
+        new_response_from_anaf.save()
         return(False)
-
-
-
-#  response example:
-# {
-#   "cod": 200,
-#   "message": "SUCCESS",
-#   "found": [
-#     {
-#       "cui": 33811173,
-#       "data": "2014-11-17",
-#       "denumire": "KODING TECHNOLOGY SRL",
-#       "adresa": "MUNICIPIUL BUCUREÅžTI, SECTOR 6, STR. ERNEST JUVARA, NR.16, ET.3",
-#       "scpTVA": false,
-#       "data_inceput_ScpTVA": " ",
-#       "data_sfarsit_ScpTVA": " ",
-#       "data_anul_imp_ScpTVA": " ",
-#       "mesaj_ScpTVA": "neplatitor IN SCOPURI de TVA la data cautata",
-#       "dataInceputTvaInc": "",
-#       "dataSfarsitTvaInc": "",
-#       "dataActualizareTvaInc": "",
-#       "dataPublicareTvaInc": "",
-#       "tipActTvaInc": "",
-#       "statusTvaIncasare": false,
-#       "dataInactivare": " ",
-#       "dataReactivare": " ",
-#       "dataPublicare": " ",
-#       "dataRadiere": " ",
-#       "statusInactivi": false,
-#       "dataInceputSplitTVA": "",
-#       "dataAnulareSplitTVA": "",
-#       "statusSplitTVA": false,
-#       "iban": ""
-#     }
-#   ],
-#   "notfound": []
-# }

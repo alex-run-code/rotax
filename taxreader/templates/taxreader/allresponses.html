@@ -33,33 +33,21 @@
       </div>
     </div>
 
-    <div class='section'>
-      <div class='row text-center'>
-        <div class='col'>
-          <table class="table table-bordered shadow bg-white">
-            <thead class='thead-dark'>
-              <tr>
-                <th scope="col">CUI</th>
-                <th scope="col">Denumire</th>
-                <th scope="col">Data</th>
-                <th scope="col">Adresa</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for company in companies %}
-              <tr>
-                <td>{{company.cui}}</td>
-                <td>{{company.denumire}}</td>
-                <td>{{company.data}}</td>
-                <td>{{company.adresa}}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+    {% for response in responses %}
+    <div class="card mt-3">
+        <div class="card-header">
+          Date : {{response.date}}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Sent</h5>
+          <p class="card-text">{{response.data_sent}}</p>
+          <h5 class="card-title">Status</h5>
+          <p class="card-text">{{response.status_code}}</p>
+          <h5 class="card-title">Received</h5>
+          <p class="card-text">{{response.data_received}}</p>
         </div>
       </div>
-    </div>
-  </div>
+      {% endfor %}
 
   <!-- Jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

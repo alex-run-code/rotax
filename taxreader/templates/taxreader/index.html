@@ -7,26 +7,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
   <!-- my css -->
   <link rel="stylesheet" href="{% static 'taxreader/css/custom.css' %}">
-
-
+  <!-- google fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
 </head>
 
+<!-- body -->
+
 <body>
-
-  <div class='container'>
-
+  <div class='container mb-5'>
     <div class='section shadow rounded mb-5 mt-3 bg-light'>
       <div class='row'>
         <div class='col text-center p-3'>
           <h1 class="display-3">Rotax</h1>
           <p>Rotax help you to find juridic informations about any company.</p>
-          <a href='{% url "companies" %}'>See all companies</a>
+          <a href='{% url "index" %}' class='mr-3'>Homepage</a>
+          <a href='{% url "companies" %}' class='mr-3'>See all companies</a>
+          <a href='{% url "all_responses" %}'>See raw responses</a>
         </div>
       </div>
     </div>
@@ -47,7 +49,7 @@
         </div>
       </div>
 
-      <div class='row mb-5'>
+      <div class='row'>
         <div class='col-md-6 offset-md-3' style='margin-top: 50px;'>
           <table id=full_table style='display:none;' class="table table-bordered">
             <thead class='thead-dark'>
@@ -59,7 +61,8 @@
             <tbody id='info_table_body'>
             </tbody>
           </table>
-          <p class='text-secondary mt-2' id='no_company_found' style='display:none'>Sorry, we didn't find any company with those infos.</p>
+          <p class='text-secondary mt-2' id='no_company_found' style='display:none'>Sorry, we didn't find any company
+            with those infos.</p>
         </div>
       </div>
     </div>
@@ -81,7 +84,7 @@
     integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
     crossorigin="anonymous"></script>
 
-
+  <!-- My scripts -->
   <script>
 
     var full_table = document.getElementById('full_table')

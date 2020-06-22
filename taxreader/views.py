@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from taxreader import readtax
-from taxreader.models import CompanyTaxInfo
+from taxreader.models import CompanyTaxInfo, ResponseFromAnaf
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
 import json
@@ -19,6 +19,13 @@ def companies(request):
     }
     return render(request, 'taxreader/companies.html', context)
 
+def all_responses(request): 
+    responses = ResponseFromAnaf.objects.all()
+    context = {
+        'responses':responses,
+    }
+    return render(request, 'taxreader/allresponses.html', context)
+
 def get_tax_info(request):
     cui = request.GET['cui']
     date = request.GET['date']
@@ -29,8 +36,6 @@ def get_tax_info(request):
     try:
         company = CompanyTaxInfo.objects.filter(cui=cui)
         json_company = serializers.serialize('json', company)
-        print(company)
-        print(len(company))
         if len(company) != 0:
             return HttpResponse(json_company, content_type="text/json-comment-filtered")
         else:

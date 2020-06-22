@@ -31,3 +31,12 @@ class CompanyTaxInfo(models.Model):
 
     def __str__(self):
         return self.denumire
+
+class ResponseFromAnaf(models.Model):
+    date = models.DateTimeField(auto_now=True)
+    data_sent = models.CharField(max_length=1000)
+    data_received = models.CharField(max_length=10000)
+    status_code = models.IntegerField()
+
+    def __str__(self):
+        return str(self.date)
